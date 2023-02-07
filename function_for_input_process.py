@@ -40,4 +40,4 @@ def chatbot_response(input_text):
     return response
 
 
-print(chatbot_response("HELLO from Haofan"))
+#print(chatbot_response("HELLO from Haofan"))
