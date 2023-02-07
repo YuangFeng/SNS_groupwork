@@ -6,7 +6,8 @@ nltk.download('stopwords')
 
 from nltk.tokenize import word_tokenize
 
-
+#If an NPL is required, a dataset of questions will be included. 
+# Otherwise, we can just use the token to generate a response.
 def tokenize_text(input_text):
     tokens = word_tokenize(input_text)
     stop_words = set(stopwords.words('english'))
