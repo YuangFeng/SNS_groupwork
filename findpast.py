@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Feb  9 12:02:52 2023
+
+@author: solom
+"""
+
 import pandas as pd
 import numpy as np
 
@@ -13,20 +20,23 @@ def findpast(season, H_names, A_names, find_names, x):
     goals = []
     goal_difference = []
     yellow_card = []
+    points = []
     for i in range(index + 1, len(df)):
         if df.iloc[i]['A'] == find_names:
             goals.append(df.iloc[i]['A Goals'])
             goal_difference.append(df.iloc[i]['A Goals'] - df.iloc[i]['H Goals'])
             yellow_card.append(df.iloc[i]['A yellows'])
+            points.append(df.iloc[i]['A points'])
         elif df.iloc[i]['H'] == find_names:
             goals.append(df.iloc[i]['H Goals'])
             goal_difference.append(df.iloc[i]['H Goals'] - df.iloc[i]['A Goals'])
             yellow_card.append(df.iloc[i]['H yellows'])
+            points.append(df.iloc[i]['H points'])
         else:
             continue
         count += 1
         if count == x:
-            return sum(goals) , sum(goals)/x, sum(goal_difference), sum(goal_difference)/x, sum(yellow_card), sum(yellow_card)/x
+            return sum(goals) , sum(goals)/x, sum(goal_difference), sum(goal_difference)/x, sum(yellow_card), sum(yellow_card)/x, sum(points)
             break
     if count == 0:
         return None
@@ -55,7 +65,8 @@ H_goal_difference = []
 H_avg_goal_difference = []
 H_yellow_card = []
 H_avg_yellow_card = []
-H_lists = [H_goals, H_avg_goals, H_goal_difference, H_avg_goal_difference, H_yellow_card, H_avg_yellow_card]
+H_points = []
+H_lists = [H_goals, H_avg_goals, H_goal_difference, H_avg_goal_difference, H_yellow_card, H_avg_yellow_card, H_points]
 
 for i in range(len(result_H)):
     if result_H[i] is None:
@@ -71,7 +82,8 @@ A_goal_difference = []
 A_avg_goal_difference = []
 A_yellow_card = []
 A_avg_yellow_card = []
-A_lists = [A_goals, A_avg_goals, A_goal_difference, A_avg_goal_difference, A_yellow_card, A_avg_yellow_card]
+A_points = []
+A_lists = [A_goals, A_avg_goals, A_goal_difference, A_avg_goal_difference, A_yellow_card, A_avg_yellow_card, A_points]
 
 for i in range(len(result_A)):
     if result_A[i] is None:
@@ -82,8 +94,99 @@ for i in range(len(result_A)):
             lst.append(result_A[i][j])
 
 df = df.assign(H_goals = H_goals, H_avg_goals = H_avg_goals, H_goal_difference = H_goal_difference,
-               H_avg_goal_difference = H_avg_goal_difference, H_yellow_card = H_yellow_card, H_avg_yellow_card = H_avg_yellow_card)
+               H_avg_goal_difference = H_avg_goal_difference, H_yellow_card = H_yellow_card, H_avg_yellow_card = H_avg_yellow_card, H_points = H_points)
 df.to_csv('PremData - complete data - edited.csv', index = False)
 df = df.assign(A_goals = A_goals, A_avg_goals = A_avg_goals, A_goal_difference = A_goal_difference,
-               A_avg_goal_difference = A_avg_goal_difference, A_yellow_card = A_yellow_card, A_avg_yellow_card = A_avg_yellow_card)
+               A_avg_goal_difference = A_avg_goal_difference, A_yellow_card = A_yellow_card, A_avg_yellow_card = A_avg_yellow_card, A_points = A_points)
 df.to_csv('PremData - complete data - edited.csv', index = False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
