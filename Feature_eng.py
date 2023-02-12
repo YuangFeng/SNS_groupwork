@@ -1,10 +1,9 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('PremData - complete data.csv')
-shape = np.shape(df)
+df = pd.read_csv('PremData - complete data.csv')#read data
 
-def findpast(season, H_name, A_name, find_name, x):
+def findpast(season, H_name, A_name, find_name, x):#Function return new features of single team in past x matches
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
@@ -34,7 +33,7 @@ def findpast(season, H_name, A_name, find_name, x):
     if count == 0:
         return None
 
-def meetingrecord(season, H_name, A_name, findname, x):
+def meetingrecord(season, H_name, A_name, findname, x):#Function that return  meeting records of past x matches between two teams
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
@@ -60,13 +59,13 @@ result_H_past5 = {}
 result_A_past5 = {}
 result_H_past20 = {}
 result_A_past20 = {}
-Meeting_record_A_2 = {}
-Meeting_record_H_2 ={}
+Meeting_record_A_3 = {}
+Meeting_record_H_3 ={}## Dictionaries to store features
 
-season_cutoff = [199, 579, 959, 1219, 1449, 1599, 1979, 2359, 2739, 3119, 3499, 3879, 4259, 4639]
+season_cutoff = [199, 579, 959, 1219, 1449, 1599, 1979, 2359, 2739, 3119, 3499, 3879, 4259, 4639] # no. of rows which a new season start
 season = 23
 
-for i in range(0, len(df)):
+for i in range(0, len(df)):# Looping row by row to create new features
     for j in season_cutoff:
         if i == j:
             season = season - 1
@@ -76,12 +75,12 @@ for i in range(0, len(df)):
     result_A_past5[i] = findpast(season, Hteam, Ateam, Ateam, 5)
     result_H_past20[i] = findpast(season, Hteam, Ateam, Hteam, 20)
     result_A_past20[i] = findpast(season, Hteam, Ateam, Ateam, 20)
-    Meeting_record_A_2[i] = meetingrecord(season, Hteam, Ateam, Ateam, 3)
-    Meeting_record_H_2[i] = meetingrecord(season, Hteam, Ateam, Hteam, 3)
+    Meeting_record_A_3[i] = meetingrecord(season, Hteam, Ateam, Ateam, 3)
+    Meeting_record_H_3[i] = meetingrecord(season, Hteam, Ateam, Hteam, 3)
 
 print(result_H_past5)
 print(result_A_past20)
-print(Meeting_record_A_2)
+print(Meeting_record_A_3)
 
 
 
