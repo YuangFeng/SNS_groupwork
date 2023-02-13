@@ -49,7 +49,7 @@ def meetingrecord(season, H_name, A_name, findname, x):#Function that return  me
             continue
         count += 1
         if count == x:
-            return goal_difference
+            return sum(goal_difference), sum(goal_difference)/x
             break
     if count == 0:
         return None
