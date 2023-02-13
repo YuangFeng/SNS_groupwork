@@ -78,3 +78,75 @@ for i in range(0, len(df)):# Looping row by row to create new features
     result_A_past20[i] = findpast(season, Hteam, Ateam, Ateam, 20)
     Meeting_record_A_3[i] = meetingrecord(season, Hteam, Ateam, Ateam, 3)
     Meeting_record_H_3[i] = meetingrecord(season, Hteam, Ateam, Hteam, 3)
+    
+# Initializing lists for storing dictionary data
+goals = []
+avg_goals = []
+goal_difference = []
+avg_goal_difference = []
+yellow_card = []
+avg_yellow_card = []
+points = []
+lists = [goals, avg_goals, goal_difference, avg_goal_difference, yellow_card, avg_yellow_card, points]
+past_goal_difference = []
+avg_past_goal_difference = []
+lists2 = [past_goal_difference, avg_past_goal_difference]
+
+
+# Load past results from dictionary to lists
+def load_pastresults(lists, result):
+    for lst in lists:
+        lst.clear()  # clear them before use
+
+    for i in range(len(result)):  # Iterate each element in dictionary
+        if result[i] is None:
+            for lst in lists:
+                lst.append(None)
+        else:
+            for j, lst in enumerate(lists):
+                lst.append(result[i][j])
+
+
+def load_meetingrecord(lists, result):
+    for lst in lists:
+        lst.clear()  # clear them before use
+
+    for i in range(len(result)):  # Iterate each element in dictionary
+        if result[i] is None:
+            for lst in lists:
+                lst.append(None)
+        else:
+            for j, lst in enumerate(lists):
+                lst.append(result[i][j])
+
+load_pastresults(lists, result_H_past5)
+df = df.assign(H_goals5=goals, H_avg_goals5=avg_goals, H_goal_difference5=goal_difference,
+               H_avg_goal_difference5=avg_goal_difference, H_yellow_card5=yellow_card,
+               H_avg_yellow_card5=avg_yellow_card, H_points5=points)  # Write list to csv file
+df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
+
+load_pastresults(lists, result_A_past5)
+df = df.assign(A_goals5=goals, A_avg_goals5=avg_goals, A_goal_difference5=goal_difference,
+               A_avg_goal_difference5=avg_goal_difference, A_yellow_card5=yellow_card,
+               A_avg_yellow_card5=avg_yellow_card, A_points5=points)
+df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
+
+load_pastresults(lists, result_H_past20)
+df = df.assign(H_goals20=goals, H_avg_goals20=avg_goals, H_goal_difference20=goal_difference,
+               H_avg_goal_difference20=avg_goal_difference, H_yellow_card20=yellow_card,
+               H_avg_yellow_card20=avg_yellow_card, H_points20=points)
+df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
+
+load_pastresults(lists, result_A_past20)
+df = df.assign(A_goals20=goals, A_avg_goals20=avg_goals, A_goal_difference20=goal_difference,
+               A_avg_goal_difference20=avg_goal_difference, A_yellow_card20=yellow_card,
+               A_avg_yellow_card20=avg_yellow_card, A_points20=points)
+df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
+
+load_meetingrecord(lists2, Meeting_record_A_3)
+df = df.assign(A_goal_difference3 = past_goal_difference, A_avg_goal_difference3 = avg_past_goal_difference)
+df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
+
+load_meetingrecord(lists2, Meeting_record_H_3)
+df = df.assign(H_goal_difference3 = past_goal_difference, H_avg_goal_difference3 = avg_past_goal_difference)
+df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
