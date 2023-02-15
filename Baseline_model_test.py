@@ -45,7 +45,8 @@ df['Result_numeric']=arr
 
 label = df['Result_numeric']
 features = df[['H_avg_goals5', 'A_avg_goals5', 'H_goal_difference5', 'A_goal_difference5', 'H_avg_yellow_card5', 'A_avg_yellow_card5', 'H_points5','A_points5',\
-               'H_avg_goals20', 'A_avg_goals20', 'H_goal_difference20', 'A_goal_difference20', 'H_avg_yellow_card20', 'A_avg_yellow_card20', 'H_points20','A_points20']].copy()
+               'H_avg_goals20', 'A_avg_goals20', 'H_goal_difference20', 'A_goal_difference20', 'H_avg_yellow_card20', 'A_avg_yellow_card20', 'H_points20','A_points20',\
+                   'H_goal_difference3', 'A_goal_difference3', 'H_avg_goal_difference3', 'A_avg_goal_difference3']].copy()
 
 X= features  # Features
 y= label  # Labels
@@ -81,7 +82,10 @@ print("SVC Accuracy:",metrics.accuracy_score(y_test, y_pred2))
 
 
 
+# from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
+# cm = confusion_matrix(y_test, y_pred)
+# ConfusionMatrixDisplay(cm, clf.classes).plot()
 
 
 
