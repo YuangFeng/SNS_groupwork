@@ -65,8 +65,6 @@ season_cutoff = [199, 579, 959, 1219, 1449, 1599, 1979, 2359, 2739, 3119, 3499, 
 season = 23
 
 for i in range(0, len(df)):# Looping row by row to create new features
-#    if i > 10:
-#       break
     for j in season_cutoff:
         if i == j:
             season = season - 1
