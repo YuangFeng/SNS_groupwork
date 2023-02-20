@@ -1,7 +1,12 @@
 import hashlib
+import pickle
 import socket
+
+import joblib
 import select
 import time
+
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -71,7 +76,12 @@ def login(server, login_succ):
 
 
 def data_process(data):
-    return data
+    model = joblib.load('The_intend_classification_model.pkl')
+    vectorizer = pickle.load(open("vectorizer.pickle", 'rb'))     # Load vectorizer
+    data = vectorizer.transform([data])
+    predicted_label = model.predict(data)[0]
+    print(predicted_label)
+    return predicted_label.encode()
 
 
 # Record the connected client and the last corresponding time

@@ -1,0 +1,5 @@
+A B Host_A	A and B play at A's home ground, who will win
+A B Host_B	A and B play at B's home ground, who will win
+A B Host_A	A and B play at A's home ground, who wins.
+A B Host_B	A and B play at B's home field, who wins
+A B Host_A	A and B play at A's home field, who will win
