@@ -73,7 +73,7 @@ print("Accuracy on training data:", accuracy_score(y, predictions))
 joblib.dump(clf, 'The_intend_classification_model.pkl')
 pickle.dump(vectorizer, open("vectorizer.pickle", "wb"))
 
-user_input = "Who would win when A and B play on the home turf of A?"
+user_input = "In Chelsea's home games, Chelsea and Bournemouth - who will win?"
 X_test = vectorizer.transform([user_input])
 predicted_label = clf.predict(X_test)[0]
 print(predicted_label)
