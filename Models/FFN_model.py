@@ -85,8 +85,8 @@ def train():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', default='/Users/fengyuang/Desktop/Cam CEPS/Term1/Software Network/Assignment/SNS_groupwork/Datasets/1502b.csv')
     parser.add_argument('--batch_size', default=6)
-    parser.add_argument('--epoches', default=30)
-    parser.add_argument('--lr', default=0.0005)
+    parser.add_argument('--epoches', default=40)
+    parser.add_argument('--lr', default=0.0006)
 
     args = parser.parse_args()
     train_loader, val_loader = prepare_data(args.data, args.batch_size)
@@ -94,12 +94,16 @@ def train():
     model = FFN(48,784,3,5)
     optimizer = torch.optim.Adam(model.parameters(), lr = args.lr)
     criterion = nn.CrossEntropyLoss()
+
     best_acc = 0
     for i in range(args.epoches):
         train_epoch(model, train_loader, criterion, optimizer)
         acc = val(model, val_loader)
         if acc > best_acc:
-            best_acc = acc #best acc 53%-55.5%
+            best_acc = acc #best acc 53.5%-57.1%
+            torch.save(model, 'Best_FFN.pth')#save model has best performance
+            print('model saved!')
         print('epoch [{}/{}] acc:{} best_acc:{}'.format(i+1, args.epoches, acc, best_acc))
+
 if __name__ == '__main__':
     train()
