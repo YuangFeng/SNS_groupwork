@@ -2,7 +2,24 @@ import pandas as pd
 
 df = pd.read_csv('allSeasons - PremData - complete data.csv')#read data
 
-def findpast(season, H_name, A_name, find_name, x):#Function return new features of single team in past x matches
+def findpast(season, H_name, A_name, find_name, x):
+    """
+    This function will return number of new features to assess the performance(either at home or at away) of a specific team in the past.
+    Input:
+        season: the season of match
+        H_name: the name of home team of match
+        A_name: the name of away team of match
+        find_name: the name of team that want to search(can only be H_name or A_name)
+        x: number of past matches of find_name team
+    Output:
+        1.sum of goals of 'find_name' team in past x matches
+        2.average goals of 'find_name' team in past x matches
+        3.sum of goal difference of 'find_name' team in past x matches
+        4.average goal difference of 'find_name' team in past x matches
+        5.sum of yellow cards of 'find_name team' got in past x matches
+        6.average of yellow cards of 'find_name team' got in past x matches
+        7.sum of points that 'find_name team' obtained in past x matches
+    """
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
@@ -33,7 +50,23 @@ def findpast(season, H_name, A_name, find_name, x):#Function return new features
         return None
 
 def findpast_homeonly(season, H_name, A_name, find_name, x):
-    #Function return new features of single team in past x matches, at home only!
+    """
+    This function will return number of new features to assess the performance(at home only!) of a specific team in the past.
+    Input:
+        season: the season of match
+        H_name: the name of home team of match
+        A_name: the name of away team of match
+        find_name: the name of team that want to search(can only be H_name or A_name)
+        x: number of past matches of 'find_name' team
+    Output:
+        1.sum of goals of 'find_name' team in past x matches
+        2.average goals of 'find_name' team in past x matches
+        3.sum of goal difference of 'find_name' team in past x matches
+        4.average goal difference of 'find_name' team in past x matches
+        5.sum of yellow cards of 'find_name team' got in past x matches
+        6.average of yellow cards of 'find_name team' got in past x matches
+        7.sum of points that 'find_name team' obtained in past x matches
+    """
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
@@ -59,7 +92,23 @@ def findpast_homeonly(season, H_name, A_name, find_name, x):
         return None
 
 def findpast_awayonly(season, H_name, A_name, find_name, x):
-    #Function return new features of single team in past x matches, at home only!
+    """
+    This function will return number of new features to assess the performance(at away only!) of a specific team in the past.
+    Input:
+        season: the season of match
+        H_name: the name of home team of match
+        A_name: the name of away team of match
+        find_name: the name of team that want to search(can only be H_name or A_name)
+        x: number of past matches of 'find_name' team
+    Output:
+        1.sum of goals of 'find_name' team in past x matches
+        2.average goals of 'find_name' team in past x matches
+        3.sum of goal difference of 'find_name' team in past x matches
+        4.average goal difference of 'find_name' team in past x matches
+        5.sum of yellow cards of 'find_name team' got in past x matches
+        6.average of yellow cards of 'find_name team' got in past x matches
+        7.sum of points that 'find_name team' obtained in past x matches
+    """
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
@@ -84,7 +133,19 @@ def findpast_awayonly(season, H_name, A_name, find_name, x):
     if count == 0:
         return None
 
-def meetingrecord(season, H_name, A_name, findname, x):#Function that return  meeting records of past x matches between two teams
+def meetingrecord(season, H_name, A_name, findname, x):
+    """
+    This function will return two new features of past meeting records between home and away teams.
+    Input:
+        season: the season of match
+        H_name: the name of home team of match
+        A_name: the name of away team of match
+        find_name: the name of team that want to search(can only be H_name or A_name)
+        x: number of meeting records.
+    Output:
+        1.sum of goal difference of 'find_name' team in past x meeting records
+        2.average goal difference of 'find_name' team in past x meeting record
+    """
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
@@ -106,44 +167,62 @@ def meetingrecord(season, H_name, A_name, findname, x):#Function that return  me
         return None
 
 def countstreak(nums):
-
+    """
+    This function counts the maximum number of streaks in a sequence of number.
+    Input:
+        a sequence of number
+    Output:
+        1.maximum streaks of -1(losses)
+        2.maximun streaks of 0(draws)
+        3.maximum streaks of 1(wins)
+    """
     res = {-1:0, 0:0, 1:0}
     l = 1
     previous = nums[0]
-
     for i in range(l, len(nums)):
         if nums[i] == previous:
             l += 1
         else:
             l = 1
-
         res[nums[i]] = max(res[nums[i]], l)
         previous = nums[i]
+    return res[1], res[0], res[-1]
 
-    return res[1], res[0], res[-1] #maximum streaks of wins, draws and losses
-
-def streak(season, H_name, A_name, find_name, x):#return maximum streaks of wins, draws and losses in past 5 matches
+def streak(season, H_name, A_name, find_name, x):
+    """
+    This function returns maximum number of streaks(wins, draws and losses) of 'find_name' team in past x matches.
+    Input:
+        season: the season of match
+        H_name: the name of home team of match
+        A_name: the name of away team of match
+        find_name: the name of team that want to search(can only be H_name or A_name)
+        x: number of past matches of 'find_name' team
+    Output:
+        1. maximum streaks of wins in past x matches that achieved by 'find_name' team
+        2. maximum streaks of draws in past x matches that achieved by 'find_name' team
+        3. maximum streaks of losses in past x matches that achieved by 'find_name' team
+    """
     loc = df[(df['Season'] == season) & (df['H'] == H_name) & (df['A'] == A_name)]
     if loc.size == 0:
         return None
     index = loc.index.tolist()[0]
     count = 0
-    past = [] ## store win/draw/loss records of past 5 games of one particular team
+    past = [] ## store win/draw/loss records of past x games of 'findname' team
     for i in range(index + 1, len(df)):
         if df.iloc[i]['A'] == find_name:
             if df.iloc[i]['A Goals'] - df.iloc[i]['H Goals'] > 0:
-                past.append(1) ## 1 stand for win
+                past.append(1)# 1 stand for win
             elif df.iloc[i]['A Goals'] - df.iloc[i]['H Goals'] == 0:
-                past.append(0) ## 0 stand for draw
-            else:## -1 stand for draw
-                past.append(-1)
+                past.append(0)# 0 stand for draw
+            else:
+                past.append(-1)# -1 stand for draw
         elif df.iloc[i]['H'] == find_name:
             if df.iloc[i]['H Goals'] - df.iloc[i]['A Goals'] > 0:
-                past.append(1) ## 1 stand for win
+                past.append(1)# 1 stand for win
             elif df.iloc[i]['H Goals'] - df.iloc[i]['A Goals'] == 0:
-                past.append(0) ## 0 stand for draw
-            else:## -1 stand for draw
-                past.append(-1)
+                past.append(0)# 0 stand for draw
+            else:
+                past.append(-1)# -1 stand for draw
         else:
             continue
         count += 1
@@ -153,7 +232,7 @@ def streak(season, H_name, A_name, find_name, x):#return maximum streaks of wins
     if count == 0:
         return None
 
-
+# Dictionaries to store new features
 result_H_past5 = {}
 result_A_past5 = {}
 result_H_past20 = {}
@@ -164,14 +243,11 @@ result_H_at_home5 = {}
 result_A_at_away5 = {}
 streak_A_past5 = {}
 streak_H_past5 = {}
-# Dictionaries to store features
 
 season_cutoff = [199, 579, 959, 1219, 1449, 1599, 1979, 2359, 2739, 3119, 3499, 3879, 4259, 4639] # no. of rows which a new season start
 season = 23
 
 for i in range(0, len(df)):# Looping row by row to create new features
-#   if i > 5:
-#    break
     for j in season_cutoff:
         if i == j:
             season -= 1
@@ -188,7 +264,7 @@ for i in range(0, len(df)):# Looping row by row to create new features
     streak_H_past5[i] = streak(season, Hteam, Ateam, Hteam, 5)
     streak_A_past5[i] = streak(season, Hteam, Ateam, Ateam, 5)
 
-"""
+
 # Initializing lists for storing dictionary data
 goals = []
 avg_goals = []
@@ -272,5 +348,3 @@ df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
 load_results(lists3, streak_A_past5)
 df = df.assign(A_W_streaks=W_streaks, A_D_streaks=D_streaks, A_L_streaks=L_streaks)  # Write list to csv file
 df.to_csv('allSeasons - PremData - complete data - edited.csv', index=False)
-
-"""
