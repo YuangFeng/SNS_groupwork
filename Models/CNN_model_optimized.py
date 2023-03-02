@@ -50,7 +50,7 @@ class MyDataset(Dataset):
     
     
 def prepare_data(data_path, batch_size):
-    name2id = dict(A=0,H=1,D=2)
+    name2id = dict(A=0,H=1,D=2)#win draw or loss
     df = pd.read_csv(data_path)
     df = df.dropna()
     labels = df['Result']
@@ -59,11 +59,9 @@ def prepare_data(data_path, batch_size):
        'H Goals', 'A Goals', 'H Shots', 'A Shots', 'H shots on target',
        'A shots on target', 'H fouls', 'A fouls', 'H yellows', 'A yellows',
        'H corners', 'A Corners',
-       'H_avg_yellow_card5', 'A_avg_yellow_card5','H_avg_yellow_card20','A_avg_yellow_card20'], axis=1)
+       'H_avg_yellow_card5', 'A_avg_yellow_card5','H_avg_yellow_card20','A_avg_yellow_card20'], axis=1)#drop features
     df = df.apply(lambda x: (x - np.min(x)) / (np.max(x) - np.min(x)))
     df['labels'] = labels
-    # print(df)
-    # print(labels)
     train_df = df.sample(frac=0.7)
     val_df =df[~df.index.isin(train_df.index)]
     train_loader = DataLoader(MyDataset(train_df), batch_size=batch_size, shuffle=True)
@@ -79,7 +77,7 @@ def train_epoch(model, data_loader,criterion, optimizer):
         loss.backward()
         optimizer.step()
 
-def val(model, data_loader):
+def evaluate(model, data_loader):
     pred_list = []
     label_list = []
     model.eval()
@@ -90,14 +88,17 @@ def val(model, data_loader):
             pred_list.extend(pred)
             label_list.extend(y.squeeze().cpu().detach().numpy())
     acc = metrics.accuracy_score(pred_list, label_list)
-    return acc
+    f1 = metrics.f1_score(label_list, pred_list, zero_division=0, average='micro')
+    cm =metrics.confusion_matrix(label_list, pred_list)
+    roc = metrics.roc_curve(label_list, pred_list, pos_label=1)  # fpr, tpr, thresholds
+    return acc, f1, cm, roc
 
 def train():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', default='/Users/fengyuang/Desktop/Cam CEPS/Term1/Software Network/Assignment/SNS_groupwork/Datasets/1502b.csv')
     parser.add_argument('--batch_size', default=6)
     parser.add_argument('--epoches', default=40)
-    parser.add_argument('--lr', default=0.0004)
+    parser.add_argument('--lr', default=0.0004)#lr: learning rate
 
     args = parser.parse_args()
     train_loader, val_loader = prepare_data(args.data, args.batch_size)
@@ -109,12 +110,14 @@ def train():
     best_acc = 0
     for i in range(args.epoches):
         train_epoch(model, train_loader, criterion, optimizer)
-        acc = val(model, val_loader)
+        acc, f1, cm, roc = evaluate(model, val_loader)
         if acc > best_acc:
             best_acc = acc #best acc， acc of 55.46%
-            torch.save(model, 'Best_CNN.pth')#save the model has best performance
+            torch.save(model, 'Best_CNN1.pth')#save the model has best performance
             print('model saved!')
-        print('epoch [{}/{}] acc:{} best_acc:{}'.format(i+1, args.epoches, acc, best_acc))
+        print('######Testing result#######')
+        print('epoch [{}/{}]'.format(i+1, args.epoches))
+        print('1.test acc:{}\n2.best acc:{}\n3.test f1:{}\n4.confusiom matrix:\n{}'.format(acc, best_acc, f1, cm))
 
 if __name__ == '__main__':
     train()
