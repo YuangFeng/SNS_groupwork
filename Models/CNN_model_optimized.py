@@ -117,7 +117,7 @@ def train():
             print('model saved!')
         print('######Testing result#######')
         print('epoch [{}/{}]'.format(i+1, args.epoches))
-        print('1.test acc:{}\n2.best acc:{}\n3.test f1:{}\n4.confusiom matrix:\n{}'.format(acc, best_acc, f1, cm))
+        print('1.test acc:{}\n2.best acc:{}\n3.test f1:{}\n4.confusiom matrix:{}\n'.format(acc, best_acc, f1, cm))
 
 if __name__ == '__main__':
     train()
