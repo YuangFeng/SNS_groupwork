@@ -103,7 +103,7 @@ def train():
         train_epoch(model, train_loader, criterion, optimizer)
         acc, f1, cm, roc = evaluate(model, val_loader)
         if acc > best_acc:
-            best_acc = acc #best acc， acc of 55.46%
+            best_acc = acc #best acc， acc of 55.65%
             torch.save(model, 'Best_FFN1.pth')#save the model has best performance
             print('model saved!')
         print('######Testing result#######')
