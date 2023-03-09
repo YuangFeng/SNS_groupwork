@@ -14,7 +14,6 @@ nltk.download('stopwords')
 
 from nltk.tokenize import word_tokenize
 
-
 # def classify_intent_ML_based_just_test():
 #     # Define the training data
 #     training_data = [("A and B play at A's home ground, who will win", "A B Host_A"),
