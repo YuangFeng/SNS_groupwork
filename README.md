@@ -34,7 +34,7 @@ Common.py:
 Some commnly used functions that has imported to interface file.
 
 Datasets folder:
-Contain 2 datasets. 'allSeasons - PremData - complete data.csv' is the dataset after cleaning. 1502b.csv is the data set contains extra new features created.
+Contain 2 datasets. 'allSeasons - PremData - complete data.csv' is the original dataset after cleaning. 1502b.csv is the dataset contains extra new features created.
 
 Models folder:
 Contains various codes for training models(CNN, FFN, SVM, RF XGBoost).
