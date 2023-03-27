@@ -6,7 +6,7 @@ import threading
 
 import joblib
 import numpy as np
-from interface_xgb import predict
+from interface_xgb import predictfuture
 
 HOST = '127.0.0.1'
 PORT = 6665
@@ -100,7 +100,7 @@ def data_process(data):
         print("prediction_model_input is " + str(prediction_model_input))
         prediction_model_input['Season'] = int(prediction_model_input['Season'])
         # hand it over to feng yuang interface
-        feedback = predict(prediction_model_input['Season'], prediction_model_input['Home_name'],
+        feedback = predictfuture(prediction_model_input['Season'], prediction_model_input['Home_name'],
                            prediction_model_input['Away_name'])
         return feedback
     else:
