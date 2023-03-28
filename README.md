@@ -1,5 +1,7 @@
 # SNS groupwork README
 
+Premier League Predictor is a simple project for predicting match outcomes using a server and clients. To set up, install Python 3.7, required libraries, and download the source code. Run the server with python server.py, then start one or more clients using python client.py in separate terminals. Users log in with a username and password, ask questions about future Premier League matches, and the server returns match results or identifies abnormal input. For troubleshooting, ensure the server starts before clients, check login credentials, and verify server-client connections.
+
 The_intend_classification_model.pkl:
 This is a trained support vector machine model that generates the user's input intent based on a TF-IDF based feature matrix. The model is the core document for extracting the user's semantic meaning.
 
